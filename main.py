@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Body, status
+import uvicorn
+from fastapi import FastAPI, Body
 from fastapi.responses import JSONResponse
 from easygoogletranslate import EasyGoogleTranslate
 
@@ -13,4 +14,7 @@ def translate(data = Body()):
     )
     result = translator.translate(data['word'])
     return JSONResponse(content={"word": result})
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
 
