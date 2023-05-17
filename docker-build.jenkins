@@ -10,10 +10,24 @@ pipeline {
         timestamps()
     }
     stages {
+        stage("docker login") {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_xwisert', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                    docker login -u $USERNAME -p $PASSWORD
+                    """
+                }
+            }
+        }
         stage("create docker image") {
             steps {
                 sh 'docker image rm -f xwisert/englishserver:latest'
                 sh 'docker build -t xwisert/englishserver:latest .'
+            }
+        }
+        stage("docker push") {
+            steps {
+                sh 'docker push xwisert/englishserver:latest'
             }
         }
     }
