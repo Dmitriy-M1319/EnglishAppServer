@@ -12,8 +12,8 @@ pipeline {
     stages {
         stage("create docker image") {
             steps {
-                sh 'docker image rm -f englishserver'
-                sh 'docker build -t englishserver .'
+                sh 'docker image rm -f xwisert/englishserver:latest'
+                sh 'docker build -t xwisert/englishserver:latest .'
             }
         }
     }
